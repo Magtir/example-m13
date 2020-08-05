@@ -1,0 +1,54 @@
+<div class="gl-page-content" appScrollUp>
+  <app-breadcrumbs [list]="breadcrumbs"></app-breadcrumbs>
+  <h1 class="page-title">Stores</h1>
+
+  <ng-container *ngIf="!(storesIsError$ | async)">
+    <div class="search-block-wrapper">
+      <app-input-search [placeholder]="'Search stores'"
+                        [control]="controlQuery"
+                        (clickSearch)="clickSearch()">
+      </app-input-search>
+      <div class="select-wrapper">
+        <app-select [placeholder]="'Filter by category'" [options]="options$ | async"
+                    [formControl]="controlSelectedCategory">
+        </app-select>
+      </div>
+    </div>
+
+    <div class="stores-list-wrapper">
+      <ng-container *ngIf="(storesIsLoadingPage$ | async) || (list$ | async).length; else NOT_FOUND">
+
+        <div class="store-loader-page gl-loader" *ngIf="storesIsLoadingPage$ | async"></div>
+
+        <ng-container *ngIf="!(storesIsLoadingPage$ | async)">
+          <div class="stores-list">
+            <a class="stores-link mod-not-underline" *ngFor="let store of list$ | async"
+               [routerLink]="['/stores', 'store-1']">
+              <app-card-store [store]="store"></app-card-store>
+            </a>
+          </div>
+
+          <button *ngIf="lastItems$ | async"
+                  class="gl-btn mod-primary mod-pink"
+                  (click)="nextPage()"
+                  appButtonLoader [active]="storesIsLoadingNextPage$ | async">
+            Show more {{ lastItems$ | async }} coupons
+          </button>
+        </ng-container>
+      </ng-container>
+      <ng-template #NOT_FOUND>
+        <app-not-found [autocomplete]="['Nike', 'Amazon', 'Walmart']"
+                       (clickAutocomplete)="clickAutocomplete($event)">
+        </app-not-found>
+      </ng-template>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="storesIsError$ | async">
+    <div class="gl-message-error">Error</div>
+  </ng-container>
+
+  <app-seo-list-categories></app-seo-list-categories>
+  <app-seo-list-links-with-caption></app-seo-list-links-with-caption>
+  <app-seo-list-stores></app-seo-list-stores>
+  <app-seo-list-links [title]="'People also like'"></app-seo-list-links>
+</div>

@@ -1,0 +1,112 @@
+@import 'consts';
+@import 'mixins/effects';
+
+app-breadcrumbs {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.page-title {
+  margin-bottom: 20px;
+}
+
+.search-block-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  margin-bottom: 40px;
+
+  @include for-bg-down {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @include for-xs-down {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 10px;
+    margin-bottom: 20px;
+  }
+}
+
+app-input-search {
+  @include for-bg-down {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+  @include for-xs-down {
+    grid-column-start: auto;
+    grid-column-end: auto;
+  }
+}
+
+.select-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+app-select {
+  width: 177px;
+}
+
+.stores-list-wrapper {
+  margin-bottom: 40px;
+}
+
+.store-loader-page {
+  margin: 50px auto;
+}
+
+.stores-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  margin-bottom: 20px;
+
+  @include for-bg-down {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include for-sm-down {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px 20px;
+  }
+
+  @include for-xxs-down {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.stores-link {
+  @include effect-fv() {
+    app-card-store {
+      ::ng-deep {
+        background-color: $grey-hover;
+      }
+    }
+  }
+
+  app-card-store {
+    ::ng-deep {
+      .rate {
+        @include for-xxs-down {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+app-seo-list-categories {
+  display: block;
+  margin-bottom: 40px;
+}
+
+app-seo-list-links-with-caption {
+  display: block;
+  margin-bottom: 40px;
+}
+
+app-seo-list-stores {
+  display: block;
+  margin-bottom: 40px;
+}
